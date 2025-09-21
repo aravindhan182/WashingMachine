@@ -19,6 +19,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -325,7 +327,7 @@ fun Header(windowSize: WindowSizeClass, onNavigate: (String) -> Unit) {
     ) {
         if (windowSize != WindowSizeClass.Compact) {
             Row(
-                modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(horizontal = 16.dp),
+                modifier = Modifier.fillMaxWidth().wrapContentHeight().padding( 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -357,7 +359,7 @@ fun Header(windowSize: WindowSizeClass, onNavigate: (String) -> Unit) {
         } else {
 
             Column(
-                modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(horizontal = 16.dp),
+                modifier = Modifier.fillMaxWidth().wrapContentHeight().padding( 16.dp),
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(
@@ -429,7 +431,10 @@ fun CallButton(phoneNumber: String) {
                 // Open the mobile dialer
                 window.location.href = "tel:$phoneNumber"
             },
-            modifier = Modifier.padding(16.dp)
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Red, // background color
+                contentColor = Color.White           // text/icon color
+            )
         ) {
             Text("Call Now")
         }
