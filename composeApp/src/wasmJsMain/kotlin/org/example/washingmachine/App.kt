@@ -53,10 +53,10 @@ import org.w3c.dom.events.Event
 import washingmachine.composeapp.generated.resources.Res
 import washingmachine.composeapp.generated.resources._8e16bda7_68fa_46e1_af03_3f7062500ef0
 import washingmachine.composeapp.generated.resources.ha0e_k0jq_220304
-import washingmachine.composeapp.generated.resources.high_angle_man_working_as_plumber
+import washingmachine.composeapp.generated.resources.`high_angle_man_working_as_plumber_min(1)`
 import washingmachine.composeapp.generated.resources.icons8_whatsapp_240
 import washingmachine.composeapp.generated.resources.vecteezy_icon_wet_floor_sign_related_to_cleaning_symbol_long_shadow_33126107
-import org.w3c.dom.events.EventListener
+import washingmachine.composeapp.generated.resources.repair_appliance_05
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -86,11 +86,15 @@ fun App() {
                     .weight(1f)
                     .verticalScroll(scrollState)
             ) {
-                Spacer(Modifier.height(when (windowSize) {
-                    WindowSizeClass.Compact -> 16.dp
-                    WindowSizeClass.Medium -> 24.dp
-                    WindowSizeClass.Expanded -> 32.dp
-                }))
+                Spacer(
+                    Modifier.height(
+                        when (windowSize) {
+                            WindowSizeClass.Compact -> 16.dp
+                            WindowSizeClass.Medium -> 24.dp
+                            WindowSizeClass.Expanded -> 32.dp
+                        }
+                    )
+                )
 
                 Box(Modifier.onGloballyPositioned { coords ->
                     sectionOffsets["Home"] = coords.positionInParent().y.toInt()
@@ -140,7 +144,7 @@ fun Home(windowSize: WindowSizeClass) {
             .height(if (windowSize == WindowSizeClass.Compact) 300.dp else 500.dp)
     ) {
         Image(
-            painterResource(Res.drawable.high_angle_man_working_as_plumber),
+            painterResource(Res.drawable.`high_angle_man_working_as_plumber_min(1)`),
             contentDescription = "",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
@@ -189,7 +193,12 @@ fun Service(windowSize: WindowSizeClass) {
     }
     val orientation: @Composable (@Composable () -> Unit) -> Unit =
         if (windowSize == WindowSizeClass.Compact) { content -> Column(content = { content() }) }
-        else { content -> Row(horizontalArrangement = arrangement as Arrangement.Horizontal, modifier = Modifier.fillMaxWidth()) { content() } }
+        else { content ->
+            Row(
+                horizontalArrangement = arrangement as Arrangement.Horizontal,
+                modifier = Modifier.fillMaxWidth()
+            ) { content() }
+        }
 
     Column(
         modifier = Modifier.padding(horizontal = 16.dp),
@@ -235,7 +244,11 @@ fun ServiceCard(title: String, imgRes: Any, details: String) {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(16.dp)
         ) {
-            Image(painterResource(imgRes as DrawableResource), contentDescription = "", modifier = Modifier.size(120.dp))
+            Image(
+                painterResource(imgRes as DrawableResource),
+                contentDescription = "",
+                modifier = Modifier.size(120.dp)
+            )
             Spacer(Modifier.height(8.dp))
             Text(title, fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(8.dp))
@@ -253,7 +266,11 @@ fun About(windowSize: WindowSizeClass) {
         elevation = CardDefaults.cardElevation(8.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text("About Us", style = MaterialTheme.typography.headlineMedium, color = Color(0xFF2196F3))
+            Text(
+                "About Us",
+                style = MaterialTheme.typography.headlineMedium,
+                color = Color(0xFF2196F3)
+            )
             Spacer(Modifier.height(8.dp))
             Text(
                 "We specialize in expert maintenance and repair services for washing machines, refrigerators, and RO water purifiers. With a commitment to excellence, we deliver timely, reliable, and customer-focused solutions.",
@@ -315,13 +332,32 @@ fun Header(windowSize: WindowSizeClass, onNavigate: (String) -> Unit) {
             Text(
                 "Vimal Tech Service",
                 color = Color.White,
-                style = TextStyle(fontSize = when (windowSize) {
-                    WindowSizeClass.Compact -> 18.sp
-                    else -> 24.sp
-                })
+                style = TextStyle(
+                    fontSize = when (windowSize) {
+                        WindowSizeClass.Compact -> 18.sp
+                        else -> 24.sp
+                    }
+                )
             )
             if (windowSize != WindowSizeClass.Compact) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
+                    NavItem("Home", onNavigate)
+                    NavItem("About", onNavigate)
+                    NavItem("Services", onNavigate)
+                    Spacer(Modifier.width(16.dp))
+                    Image(
+                        painterResource(Res.drawable.icons8_whatsapp_240),
+                        modifier = Modifier.size(32.dp).clickable {
+                            window.open("https://wa.me/9361731890", "_blank")
+                        },
+                        contentDescription = ""
+                    )
+                }
+            } else {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.End
+                ) {
                     NavItem("Home", onNavigate)
                     NavItem("About", onNavigate)
                     NavItem("Services", onNavigate)
