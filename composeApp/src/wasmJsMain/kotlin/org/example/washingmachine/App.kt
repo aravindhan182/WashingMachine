@@ -56,7 +56,6 @@ import washingmachine.composeapp.generated.resources.ha0e_k0jq_220304
 import washingmachine.composeapp.generated.resources.`high_angle_man_working_as_plumber_min(1)`
 import washingmachine.composeapp.generated.resources.icons8_whatsapp_240
 import washingmachine.composeapp.generated.resources.vecteezy_icon_wet_floor_sign_related_to_cleaning_symbol_long_shadow_33126107
-import washingmachine.composeapp.generated.resources.repair_appliance_05
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
