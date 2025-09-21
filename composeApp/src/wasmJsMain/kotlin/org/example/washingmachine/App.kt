@@ -17,28 +17,26 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
-import kotlinx.browser.window
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeJoin
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInParent
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -52,8 +50,8 @@ import org.jetbrains.compose.resources.painterResource
 import org.w3c.dom.events.Event
 import washingmachine.composeapp.generated.resources.Res
 import washingmachine.composeapp.generated.resources._8e16bda7_68fa_46e1_af03_3f7062500ef0
+import washingmachine.composeapp.generated.resources.ap
 import washingmachine.composeapp.generated.resources.ha0e_k0jq_220304
-import washingmachine.composeapp.generated.resources.`high_angle_man_working_as_plumber_min(1)`
 import washingmachine.composeapp.generated.resources.icons8_whatsapp_240
 import washingmachine.composeapp.generated.resources.vecteezy_icon_wet_floor_sign_related_to_cleaning_symbol_long_shadow_33126107
 
@@ -143,7 +141,7 @@ fun Home(windowSize: WindowSizeClass) {
             .height(if (windowSize == WindowSizeClass.Compact) 300.dp else 500.dp)
     ) {
         Image(
-            painterResource(Res.drawable.`high_angle_man_working_as_plumber_min(1)`),
+            painterResource(Res.drawable.ap),
             contentDescription = "",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
@@ -180,6 +178,7 @@ fun Home(windowSize: WindowSizeClass) {
             Spacer(Modifier.height(4.dp))
             Text("Municipal Colony,", color = Color.White, fontSize = subHeadingSize)
             Text("Tanjavur - 613007", color = Color.White, fontSize = subHeadingSize)
+            CallButton("8610872326")
         }
     }
 }
@@ -323,22 +322,23 @@ fun Header(windowSize: WindowSizeClass, onNavigate: (String) -> Unit) {
     Box(
         modifier = Modifier.fillMaxWidth().height(80.dp).background(Color(0xFF0c2b14))
     ) {
-        Row(
-            modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                "Vimal Tech Service",
-                color = Color.White,
-                style = TextStyle(
-                    fontSize = when (windowSize) {
-                        WindowSizeClass.Compact -> 18.sp
-                        else -> 24.sp
-                    }
+        if (windowSize != WindowSizeClass.Compact) {
+            Row(
+                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    "Vimal Tech Service",
+                    color = Color.White,
+                    style = TextStyle(
+                        fontSize = when (windowSize) {
+                            WindowSizeClass.Compact -> 18.sp
+                            else -> 24.sp
+                        }
+                    )
                 )
-            )
-            if (windowSize != WindowSizeClass.Compact) {
+
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     NavItem("Home", onNavigate)
                     NavItem("About", onNavigate)
@@ -352,23 +352,35 @@ fun Header(windowSize: WindowSizeClass, onNavigate: (String) -> Unit) {
                         contentDescription = ""
                     )
                 }
-            } else {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.End
-                ) {
-                    NavItem("Home", onNavigate)
-                    NavItem("About", onNavigate)
-                    NavItem("Services", onNavigate)
-                    Spacer(Modifier.width(16.dp))
-                    Image(
-                        painterResource(Res.drawable.icons8_whatsapp_240),
-                        modifier = Modifier.size(32.dp).clickable {
-                            window.open("https://wa.me/9361731890", "_blank")
-                        },
-                        contentDescription = ""
+            }
+        } else {
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.End
+            ) {
+                Text(
+                    "Vimal Tech Service",
+                    color = Color.White,
+                    style = TextStyle(
+                        fontSize = when (windowSize) {
+                            WindowSizeClass.Compact -> 18.sp
+                            else -> 24.sp
+                        }
                     )
-                }
+                )
+                Spacer(modifier = Modifier.padding(8.dp))
+                NavItem("Home", onNavigate)
+                NavItem("About", onNavigate)
+                NavItem("Services", onNavigate)
+                Spacer(Modifier.width(16.dp))
+                Image(
+                    painterResource(Res.drawable.icons8_whatsapp_240),
+                    modifier = Modifier.size(56.dp).clickable {
+                        window.open("https://wa.me/9361731890", "_blank")
+                    },
+                    contentDescription = ""
+                )
             }
         }
     }
@@ -406,4 +418,23 @@ fun rememberWindowSizeClass(): WindowSizeClass {
         width < 840 -> WindowSizeClass.Medium    // Tablet
         else -> WindowSizeClass.Expanded         // Desktop
     }
+}
+
+@Composable
+fun CallButton(phoneNumber: String) {
+    if (isMobile()) {
+        Button(
+            onClick = {
+                // Open the mobile dialer
+                window.location.href = "tel:$phoneNumber"
+            },
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text("Call Now")
+        }
+    }
+}
+fun isMobile(): Boolean {
+    val ua = window.navigator.userAgent.lowercase()
+    return ua.contains("android") || ua.contains("iphone") || ua.contains("ipad")
 }
