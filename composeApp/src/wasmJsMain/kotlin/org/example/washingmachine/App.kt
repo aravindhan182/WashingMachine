@@ -179,7 +179,7 @@ fun Home(windowSize: WindowSizeClass) {
             Spacer(Modifier.height(4.dp))
             Text("Municipal Colony,", color = Color.White, fontSize = subHeadingSize)
             Text("Tanjavur - 613007", color = Color.White, fontSize = subHeadingSize)
-            CallButton("8610872326")
+            CallButton("9361731890")
         }
     }
 }
