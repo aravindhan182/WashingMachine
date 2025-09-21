@@ -325,7 +325,7 @@ fun Header(windowSize: WindowSizeClass, onNavigate: (String) -> Unit) {
     ) {
         if (windowSize != WindowSizeClass.Compact) {
             Row(
-                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+                modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -357,7 +357,7 @@ fun Header(windowSize: WindowSizeClass, onNavigate: (String) -> Unit) {
         } else {
 
             Column(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(
